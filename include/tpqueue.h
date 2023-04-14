@@ -1,4 +1,7 @@
 // Copyright 2022 NNTU-CS
+
+#include <iostream>
+
 #ifndef INCLUDE_TPQUEUE_H_
 #define INCLUDE_TPQUEUE_H_
 
@@ -7,6 +10,7 @@ class TPQueue {
  private:
     T *arr;
     int first, last, count;
+    
  public:
     TPQueue() {
         arr = new T[size];
@@ -41,7 +45,6 @@ class TPQueue {
     T pop() {
         if (isEmpty()) {
             std::cout << "Stack is Empty!" << "\n";
-            return -1;
         } else {
             --count;
             T t = arr[first];
