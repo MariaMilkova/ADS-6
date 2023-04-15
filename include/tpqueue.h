@@ -27,23 +27,28 @@ class TPQueue {
     ~TPQueue() {
         delete[] arr;
     }
-    void push(const T & value) {
+    void push(const T& value) {
         if (isFull()) {
             throw std::string("Full");
         } else {
-            if (value.prior <= arr[last--].prior || count == 0) {
+            if ( isEmpty() || value.prior <= arr[(last - 1) % size].prior) {
                 arr[last] = value;
                 last = (last + 1) % size;
                 ++count;
             } else {
-                int flag = last;
-                while (value.prior > arr[flag--].prior) {
-                    T newv = arr[flag--];
-                    arr[flag] = newv;
-                    flag--;
+                int flag = (last + 1) % size;
+                while (value.prior > arr[(last - 1) % size].prior) {
+                    if (first == last) {
+                        break;
+                    } else if (last == 0) {
+                        last = size;
+                    }
+                    T newv = arr[(last - 1) % size];
+                    arr[last] = newv;
+                    last = (last - 1) % size;
                 }
-                arr[flag] = value;
-                last = (last + 1) % size;
+                arr[last] = value;
+                last = flag;
                 ++count;
             }
         }
