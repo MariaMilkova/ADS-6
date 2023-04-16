@@ -31,21 +31,22 @@ class TPQueue {
         if (isFull()) {
             throw std::string("Full");
         } else {
-            if ( isEmpty() || value.prior <= arr[(last - 1) % size].prior) {
+            if (isEmpty() || value.prior <= arr[(last - 1) % size].prior) {
                 arr[last] = value;
                 last = (last + 1) % size;
                 ++count;
             } else {
                 int flag = (last + 1) % size;
+                if (last == 0) {
+                    last = size;
+                }
                 while (value.prior > arr[(last - 1) % size].prior) {
-                    if (first == last) {
-                        break;
-                    } else if (last == 0) {
-                        last = size;
-                    }
                     T newv = arr[(last - 1) % size];
                     arr[last] = newv;
                     last = (last - 1) % size;
+                    if (first == last) {
+                        break;
+                    }
                 }
                 arr[last] = value;
                 last = flag;
