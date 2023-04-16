@@ -36,20 +36,15 @@ class TPQueue {
                 last = (last + 1) % size;
                 ++count;
             } else {
-                int flag = (last + 1) % size;
-                if (last == 0) {
-                    last = size;
+                int flag = first;
+                while (value.prior <= arr[flag].prior && flag != last) {
+                    flag = (flag + 1) % size;
                 }
-                while (value.prior > arr[(last - 1) % size].prior) {
-                    T newv = arr[(last - 1) % size];
-                    arr[last] = newv;
-                    last = (last - 1) % size;
-                    if (first == last) {
-                        break;
-                    }
+                for (int i = last; i != flag; i = (size + i - 1) % size) {
+                    arr[i] = arr[(size + i - 1) % size];
                 }
-                arr[last] = value;
-                last = flag;
+                arr[flag] = value;
+                last = (last + 1) % size;
                 ++count;
             }
         }
